@@ -430,7 +430,7 @@ void keep_First_pan_connection()
  int main(void)
  {
     xz_button_init2();
-    audio_server_set_private_volume(AUDIO_TYPE_LOCAL_MUSIC, 6);//设置音量
+    audio_server_set_private_volume(AUDIO_TYPE_LOCAL_MUSIC, 15);//设置音量
     iot_initialize();//Initialize iot
 #ifdef BSP_USING_BOARD_SF32LB52_LCHSPI_ULP
     unsigned int *addr2 = (unsigned int *)0x50003088;   //21

@@ -297,12 +297,13 @@ void xiaozhi_ui_task(void *args)
     rt_sem_init(&update_ui_sema, "update_ui", 1, RT_IPC_FLAG_FIFO);
 
     /* init littlevGL */
-    ret = littlevgl2rtt_init("lcd");
+    ret = littlevgl2rtt_init(LCD_DEVICE_NAME);
     if (ret != RT_EOK)
     {
         return;
     }
-
+    
+#ifdef BSP_USING_TOUCHD
     touch_device = rt_device_find(TOUCH_NAME);
     if(touch_device==RT_NULL)
     {
@@ -310,6 +311,7 @@ void xiaozhi_ui_task(void *args)
         RT_ASSERT(0);
     }
     rt_device_control(touch_device, RTGRAPHIC_CTRL_POWEROFF, NULL);
+#endif
 
 #ifdef BSP_USING_PM
     pm_ui_init();
