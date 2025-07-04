@@ -101,28 +101,28 @@ rt_err_t xiaozhi_ui_obj_init(void)
 
     global_img_ble = lv_img_create(lv_screen_active());//ble
     lv_img_set_src(global_img_ble, &ble);
-    lv_obj_align(global_img_ble, LV_ALIGN_TOP_LEFT, 40, 0);
+    lv_obj_align(global_img_ble, LV_ALIGN_TOP_LEFT, 75, 0);
     
 
     global_img = lv_img_create(lv_screen_active());//emoji
     lv_img_set_src(global_img, &neutral);
-    lv_obj_align(global_img, LV_ALIGN_CENTER, 0, -40);
+    lv_obj_align(global_img, LV_ALIGN_CENTER, 0, -20);
     
     
     global_label1 = lv_label_create(lv_screen_active());//top text
 
     lv_label_set_long_mode(global_label1, LV_LABEL_LONG_SCROLL_CIRCULAR); 
     lv_obj_add_style(global_label1, &style, 0);
-    lv_obj_set_width(global_label1, 150);
+    lv_obj_set_width(global_label1, 90);
     lv_obj_set_style_text_align(global_label1,LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_align(global_label1, LV_ALIGN_TOP_MID, 0, 0);
+    lv_obj_align(global_label1, LV_ALIGN_TOP_MID, 10, 0);
     
 
     global_label2 = lv_label_create(lv_screen_active());//output text
 
     lv_label_set_long_mode(global_label2, LV_LABEL_LONG_WRAP);  /*Break the long lines*/
     lv_obj_add_style(global_label2, &style, 0);
-    lv_obj_set_width(global_label2, LV_HOR_RES_MAX);
+    lv_obj_set_width(global_label2, 280);
     lv_obj_set_style_text_align(global_label2,LV_TEXT_ALIGN_CENTER, 0);
     
     lv_obj_align_to(global_label2, global_img, LV_ALIGN_OUT_BOTTOM_MID, 0, 0);
@@ -319,10 +319,10 @@ void xiaozhi_ui_task(void *args)
     
 
     lv_style_init(&style);
-    lv_font_t *font = lv_tiny_ttf_create_data(droid_sans_fallback_font, droid_sans_fallback_font_size, 30);
+    lv_font_t *font = lv_tiny_ttf_create_data(droid_sans_fallback_font, droid_sans_fallback_font_size, 24);
     lv_style_set_text_font(&style, font);
     lv_style_set_text_align(&style, LV_TEXT_ALIGN_CENTER);
-    lv_style_set_text_color(&style, lv_color_hex(0xFFFFFF));
+    lv_style_set_text_color(&style, lv_color_hex(0xDCE1E6));
     lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);//SET BG COLOR
 
     ret = xiaozhi_ui_obj_init();

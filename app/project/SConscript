@@ -15,7 +15,12 @@ objs.extend(SConscript(os.path.join(SIFLI_SDK, 'example/rom_bin/lcpu_general_ble
 # Add application source code
 objs.extend(SConscript(cwd+'/../src/SConscript', variant_dir="src", duplicate=0))
 
-# Add ezip resource
-objs.extend(SConscript(cwd+'/../asset/SConscript', variant_dir="asset", duplicate=0))
+board = GetOption('board')
+if board == 'sf32lb52-xty-ai':
+    print("当前开发板是 sf32lb52-xty-ai，执行相关逻辑")
+    objs.extend(SConscript(cwd+'/../asset2/SConscript', variant_dir="asset2", duplicate=0))
+else:
+    print("当前开发板不是 sf32lb52-xty-ai，跳过编译")
+    objs.extend(SConscript(cwd+'/../asset/SConscript', variant_dir="asset", duplicate=0))
 
 Return('objs')

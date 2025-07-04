@@ -43,8 +43,6 @@
  *
  */
 
-
-
 #include "rtthread.h"
 #include "bf0_hal.h"
 #include "drv_io.h"
@@ -92,11 +90,8 @@
  #define KEEP_FIRST_PAN_RECONNECT 5
  #define PAN_TIMER_MS        3000
  
-
-
-
- bt_app_t g_bt_app_env;
- rt_mailbox_t g_bt_app_mb;
+bt_app_t g_bt_app_env;
+rt_mailbox_t g_bt_app_mb;
 BOOL g_pan_connected = FALSE;
 BOOL first_pan_connected = FALSE;
 int first_reconnect_attempts = 0;
@@ -107,7 +102,6 @@ int first_reconnect_attempts = 0;
          rt_mb_send(g_bt_app_mb, BT_APP_CONNECT_PAN);
      return;
  }
- 
  
  #if defined(BSP_USING_SPI_NAND) && defined(RT_USING_DFS)
  #include "dfs_file.h"
@@ -172,6 +166,34 @@ static void xz_button_event_handler2(int32_t pin, button_action_t action)
     }
 }
 
+// #define SIQ_B   40
+// #define SIQ_A   38
+// #define SIQ_S   39
+// static void siq_event_handler(int32_t pin, button_action_t action)
+// {
+//     char volume = 0; 
+//     char strbuf[10] = {0};
+//     if(action == BUTTON_PRESSED)
+//     {
+//         volume = audio_server_get_private_volume(AUDIO_TYPE_LOCAL_MUSIC);
+//         // 判断中断触发的边沿
+//         if (rt_pin_read(SIQ_B) == 1)
+//         {
+//             volume ++;
+//             if(volume > 15) volume = 15;
+            
+//         }
+//         else
+//         {
+//             volume --;
+//             if(volume < 0) volume = 0;
+//         }
+//         sprintf(strbuf,"音量:%d",volume);
+//         xiaozhi_ui_chat_output(strbuf);
+//         audio_server_set_private_volume(AUDIO_TYPE_LOCAL_MUSIC, volume);
+//     }
+// }
+
 static void xz_button_init2(void)
 {
     static int initialized = 0;
@@ -181,13 +203,21 @@ static void xz_button_init2(void)
         button_cfg_t cfg;
         cfg.pin = BSP_KEY1_PIN;
 
-        cfg.active_state = BSP_KEY1_ACTIVE_HIGH;
+        cfg.active_state = 0;
         cfg.mode = PIN_MODE_INPUT;
         cfg.button_handler = xz_button_event_handler2;
         int32_t id = button_init(&cfg);
         RT_ASSERT(id >= 0);
         RT_ASSERT(SF_EOK == button_enable(id));
-        initialized = 1;
+
+        // cfg.pin = SIQ_A;
+        // cfg.active_state = 0;
+        // cfg.mode = PIN_MODE_INPUT;
+        // cfg.button_handler = siq_event_handler;
+        // id = button_init(&cfg);
+        // RT_ASSERT(id >= 0);
+        // RT_ASSERT(SF_EOK == button_enable(id));
+        // initialized = 1;
     }
 }
 void keep_First_pan_connection()
@@ -423,10 +453,6 @@ void keep_First_pan_connection()
      static const char *local_name = "sifli-pan";
  #endif
 
-
- 
-
- 
  int main(void)
  {
     xz_button_init2();
